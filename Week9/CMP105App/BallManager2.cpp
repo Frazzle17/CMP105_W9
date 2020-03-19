@@ -32,7 +32,7 @@ void BallManager2::update(float dt)
 		}
 	}
 	deathCheck();
-	std::cout << noBalls << std::endl;
+	std::cout << noBalls << "  ";
 }
 
 void BallManager2::spawn()
