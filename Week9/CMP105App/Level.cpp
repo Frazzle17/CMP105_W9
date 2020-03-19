@@ -15,6 +15,14 @@ Level::Level(sf::RenderWindow* hwnd, Input* in)
 	player.setTexture(&playerTexture);
 	player.setPosition(window->getSize().x / 2, window->getSize().y / 2);
 	player.setSize(sf::Vector2f(100, 100));
+	player.setInput(input);
+
+	bulletManager.setWindow(window);
+	bulletManager.setInput(input);
+	Player* play = &player;
+	bulletManager.setPlayer(play);
+	bulletManager.setSpawnPoint(sf::Vector2f(player.getPosition().x + (player.getSize().x / 2), player.getPosition().y + (player.getSize().y / 2)));
+	shoot = false;
 }
 
 Level::~Level()
@@ -35,6 +43,16 @@ void Level::handleInput(float dt)
 		input->setKeyUp(sf::Keyboard::Num2);
 		ballManager2.spawn();
 	}
+	player.handleInput();
+	if (input->isMouseLDown() && shoot == false)
+	{
+		bulletManager.spawn();
+		shoot = true;
+	}
+	if (!input->isMouseLDown())
+	{
+		shoot = false;
+	}
 }
 
 // Update game objects
@@ -42,6 +60,8 @@ void Level::update(float dt)
 {
 	ballManager.update(dt);
 	ballManager2.update(dt);
+	player.update(dt);
+	bulletManager.update(dt);
 }
 
 // Render level
@@ -51,6 +71,8 @@ void Level::render()
 
 	ballManager.render();
 	ballManager2.render();
+	window->draw(player);
+	bulletManager.render();
 
 	endDraw();
 }

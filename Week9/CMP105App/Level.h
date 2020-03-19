@@ -7,6 +7,7 @@
 #include "BallManager.h"
 #include "BallManager2.h"
 #include "Player.h"
+#include "BulletManager.h"
 
 
 class Level{
@@ -32,4 +33,7 @@ private:
 
 	Player player;
 	sf::Texture playerTexture;
+
+	BulletManager bulletManager;
+	bool shoot;
 };
